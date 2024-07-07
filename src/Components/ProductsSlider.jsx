@@ -7,7 +7,7 @@ export default function ProductsSlider(){
     const showNumberOfProducts = useState(7);
 
     return (
-        <div className="flex gap-4 overflow-x-scroll h-full px-8">
+        <div className="flex gap-4 overflow-x-scroll h-full px-4">
             {FakeProducts.map((product, num) => {
                 if(num >= showNumberOfProducts){
                     return

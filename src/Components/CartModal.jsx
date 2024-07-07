@@ -3,6 +3,7 @@ import { useImperativeHandle, forwardRef, useRef, useState } from 'react';
 import { deletIcon, cancelSymbol } from './icons';
 import {useSelector, useDispatch} from "react-redux"
 import { cartActions } from '../../store/Cart';
+import { Link } from 'react-router-dom';
 
 const CartModal = forwardRef(function CartModal({}, ref) {
 
@@ -57,7 +58,7 @@ const CartModal = forwardRef(function CartModal({}, ref) {
           <h3>Total Price: ${totalPrice}</h3>
         <div className='h-10 flex items-center font-light min-h-14'>
           <button className='font-normal px-2 hover:font-medium' type='button' onClick={() => setIsOpen(false)}>Cancel</button>
-          <button className='px-2 font-normal bg-black text-white rounded-xl p-2' type='button' >Checkout</button>
+          <Link to="/checkout" className='px-2 font-normal bg-black text-white rounded-xl p-2' type='button' >Checkout</Link>
         </div>
         </div>
       </dialog>
