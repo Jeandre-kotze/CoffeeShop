@@ -1,5 +1,10 @@
+import { useSelector } from "react-redux";
+
 export default function CheckoutPage(){
-    console.log("Hello");
+
+  const totalPrice = useSelector(state => state.totalAmount);
+  const items = useSelector(state => state.cartItems);
+
     return (
         <>
     <div className="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
@@ -43,40 +48,30 @@ export default function CheckoutPage(){
       <div className="col-md-5 col-lg-4 order-md-last">
         <h4 className="d-flex justify-content-between align-items-center mb-3">
           <span className="text-primary">Your cart</span>
-          <span className="badge bg-primary rounded-pill">3</span>
+          <span className="badge bg-primary rounded-pill">{items.length}</span>
         </h4>
-        <ul className="list-group mb-3">
-          <li className="list-group-item d-flex justify-content-between lh-sm">
+        <ul className="list-group mb-3 overflow-y-scroll h-72">
+         
+          {items.map((item, index) => (
+            <li key={index} className="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 className="my-0">Product name</h6>
+              <h6 className="my-0">{item.name}</h6>
               <small className="text-body-secondary">Brief description</small>
             </div>
-            <span className="text-body-secondary">$12</span>
+            <span className="text-body-secondary">${item.price}</span>
           </li>
-          <li className="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 className="my-0">Second product</h6>
-              <small className="text-body-secondary">Brief description</small>
-            </div>
-            <span className="text-body-secondary">$8</span>
-          </li>
-          <li className="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 className="my-0">Third item</h6>
-              <small className="text-body-secondary">Brief description</small>
-            </div>
-            <span className="text-body-secondary">$5</span>
-          </li>
+          ))}
+
           <li className="list-group-item d-flex justify-content-between bg-body-tertiary">
             <div className="text-success">
               <h6 className="my-0">Promo code</h6>
               <small>EXAMPLECODE</small>
             </div>
-            <span className="text-success">−$5</span>
+            <span className="text-success">0$</span>
           </li>
           <li className="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
-            <strong>$20</strong>
+            <strong>${totalPrice}</strong>
           </li>
         </ul>
 
