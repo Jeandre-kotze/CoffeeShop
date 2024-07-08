@@ -23,7 +23,7 @@ export default function Navbar(){
     return (
         <div>
           <div className="navbar md:hidden bg-blue-50">
-            <h1 className="text-xl cursor-pointer opacity-70" onClick={handleScroll} >☰</h1>
+            <h1 className="text-2xl cursor-pointer opacity-70" onClick={handleScroll} >☰</h1>
             <h1 className="brand-name-navbar">Caraleto</h1>
             <div className="relative">
               <Link onClick={handleShowModal}>{shoppingBag}</Link>
