@@ -88,7 +88,7 @@ export default function CheckoutPage(){
           <div className="row g-3">
             <div className="col-sm-6">
               <label htmlFor="firstName" className="form-label">First name</label>
-              <input type="text" className="form-control" id="firstName" placeholder="" value="" required="" />
+              <input type="text" className="form-control" id="firstName" placeholder="" required="" />
               <div className="invalid-feedback">
                 Valid first name is required.
               </div>
@@ -96,7 +96,7 @@ export default function CheckoutPage(){
 
             <div className="col-sm-6">
               <label htmlFor="lastName" className="form-label">Last name</label>
-              <input type="text" className="form-control" id="lastName" placeholder="" value="" required="" />
+              <input type="text" className="form-control" id="lastName" placeholder="" required="" />
               <div className="invalid-feedback">
                 Valid last name is required.
               </div>
