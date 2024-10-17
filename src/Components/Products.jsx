@@ -26,7 +26,7 @@ export default function Products(){
         <div className="w-full h-full px-8 bg-orange-100 min-h-[100vh]">
             <Navbar />
             <h1 className="pt-[65px] pb-3 text-center font-light font-serif text-4xl" >Order now</h1>
-            <div className="justify-items-center grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4
+            <div className="justify-items-center grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-4
             gap-3 ">
                 {products.map((item, itemnumber) => {
                     if(itemnumber < showNumberOfProducts){
