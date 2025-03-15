@@ -19,15 +19,6 @@ export const FakeProducts = [
         reviews_rating: 4.25,
     },
     {
-        id: 3,
-        name: 'Secret coffee',
-        price: 300,
-        img: "/coffee3.jpeg",
-        alt: "coffee",
-        reviews_count: 520,
-        reviews_rating: 4,
-    },
-    {
         id: 4,
         name: 'Iced coffee',
         price: 350,

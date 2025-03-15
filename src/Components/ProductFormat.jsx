@@ -1,48 +1,65 @@
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import Modal from "./Modal"
+import Modal from "./Modal";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/Cart";
 
 function ProductFormat({ product }) {
-    const navigate = useNavigate();
     const modal = useRef();
-    const dispatch = useDispatch();  // Added Redux dispatch hook
+    const dispatch = useDispatch();
 
-    function handleClick() {
-        navigate(`/products/${product.id}`);  // Corrected the URL path
-    }
-
-    function handleShowModal(){
+    function handleShowModal() {
         modal.current.open();
     }
 
-    function handleConfirmModal(){
+    function handleConfirmModal() {
         dispatch(cartActions.addItem(product));
         modal.current.close();
     }
 
     return (
         <>
-            <div className="flex flex-col text-left min-w-72 pb-5">
-            <img className=" hover:cursor-pointer h-72 w-72" onClick={handleClick} src={product.img} alt={product.alt} />
-            <h1 className="pt-2 text-xl font-bold cursor-pointer hover:underline">{product.name}</h1>
-            <h2 className="py-1 font-ligth" onClick={handleClick}>${product.price}</h2>
-            <h3>
-            <span className={`fa fa-star ${'checked'}`}></span>
+            <div className="flex flex-col text-left min-w-72 pb-4">
+                {/* Image Container */}
+                <div className="overflow-hidden rounded-xl max-w-72 max-h-72 flex justify-center items-center shadow-lg">
+                    <img
+                        src={product.img}
+                        alt={product.alt}
+                        className=" cursor-pointer w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                </div>
 
-                {` ${product.reviews_rating} (${product.reviews_count})`}
-            </h3>
-            <button type="button" className="py-2" onClick={handleShowModal}>Order now</button>
-        </div>
-        <Modal ref={modal} confirm={handleConfirmModal}/>
+                {/* Product Info */}
+                <h1 className="pt-3 text-2xl font-bold text-white cursor-pointer hover:underline">
+                    {product.name}
+                </h1>
+                <h2 className="py-1 text-lg font-light text-white">${product.price}</h2>
+
+                {/* Star Ratings */}
+                <div className="flex items-center gap-1">
+                    <span className="fa fa-star text-yellow-400"></span>
+                    <span className="text-sm text-white">
+                        {` ${product.reviews_rating} (${product.reviews_count})`}
+                    </span>
+                </div>
+
+                {/* Order Button */}
+                <button
+                    type="button"
+                    className="mt-3 bg-[#B58338] text-white px-4 py-2 rounded-lg hover:bg-[#8B5E3B] transition-colors"
+                    onClick={handleShowModal}
+                >
+                    Order Now
+                </button>
+            </div>
+
+            <Modal ref={modal} confirm={handleConfirmModal} />
         </>
     );
 }
 
 ProductFormat.propTypes = {
-    product: PropTypes.object.isRequired,  // Corrected PropTypes usage
+    product: PropTypes.object.isRequired,
 };
 
 export default ProductFormat;

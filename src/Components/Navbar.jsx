@@ -3,94 +3,101 @@ import { shoppingBag, cancelSymbol } from "./icons";
 import { useState, useRef } from "react";
 import CartModal from "./CartModal";
 import { useSelector } from "react-redux";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
-export default function Navbar(){
-
+export default function Navbar() {
   const [activeScrollBar, setActiveScrollBar] = useState(false);
-  const itemAmount = useSelector(state => state.cartItems.length)
+  const itemAmount = useSelector((state) => state.cartItems.length);
   const dialog = useRef();
+  const { scrollY } = useScroll(); // Track scroll position
+  const [backgroundColor, setBackgroundColor] = useState(false);
 
-  function handleScroll(){
-    setActiveScrollBar(prevActive => {
-      return !prevActive;
-    })
+  // Update the background color when scrollY changes
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 125) {
+      setBackgroundColor(true); // Change to a dark background
+    } else {
+      setBackgroundColor(false); // Reset to transparent
+    }
+  });
+
+  function handleScroll() {
+    setActiveScrollBar((prevActive) => !prevActive);
   }
 
-  function handleShowModal(){
+  function handleShowModal() {
     dialog.current.open();
   }
 
-    return (
-        <div>
-          <div className="navbar md:hidden bg-blue-50">
-            <h1 className="text-2xl cursor-pointer opacity-70" onClick={handleScroll} >☰</h1>
-            <h1 className="brand-name-navbar">Caraleto</h1>
-            <div className="relative">
-              <Link onClick={handleShowModal}>{shoppingBag}</Link>
-              <p className="absolute top-[16px] right-[1px] px-1 font-medium rounded-[50%] outline outline-1 text-xs">{itemAmount}</p>
-            </div>
-          </div>
-          {activeScrollBar && (
-            <aside className="z-0 fixed left-0 top-0 h-full w-56
-             bg-orange-100 text-left text-2xl p-3" >
-              <div onClick={handleScroll} className="text-left cursor-pointer">{cancelSymbol}</div>
-              <ul className=" flex flex-col gap-1 pt-4">
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/products">Products</Link></li>
-                  <li><Link to="/contact">Contact</Link></li>
-              </ul>
-            </aside>
-          )}
-          <header className="navbar hidden md:flex bg-blue-50">
-            <h1 className="brand-name-navbar">Caraleto</h1>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/products">Products</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
-            </ul>
-            <div className="relative">
-              <Link onClick={handleShowModal}>{shoppingBag}</Link>
-              <p className="absolute top-[16px] right-[1px] px-1 font-medium rounded-[50%] outline outline-1 text-xs">{itemAmount}</p>
-            </div>
-          </header>
-          <CartModal ref={dialog} />
+  return (
+    <motion.div className="z-50">
+      {/* Mobile Navbar */}
+      <motion.div
+        style={{
+          backgroundColor: "#3E2723",
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 2 } }}
+        className="flex justify-between items-center w-full fixed top-0 left-0 md:hidden text-white py-3 px-3 shadow-md"
+      >
+        <h1 className="text-3xl cursor-pointer transitiontext-white " onClick={handleScroll}>
+          ☰
+        </h1>
+        <h1 className="text-2xl font-bold tracking-wide text-[#E3C08D]">Caraleto</h1>
+        <div className="relative">
+          <Link onClick={handleShowModal} className="hover:scale-110 transition-transform">
+            {shoppingBag}
+          </Link>
+          <p className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            {itemAmount}
+          </p>
         </div>
-    )
-}
+      </motion.div>
 
-/*<nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">Navbar</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Link</a>
-              </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">Action</a></li>
-                  <li><a className="dropdown-item" href="#">Another action</a></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+      {/* Sidebar */}
+      {activeScrollBar && (
+        <aside className="fixed left-0 top-0 h-full w-60 bg-[#4E342E] text-white text-xl p-4 z-50 shadow-xl transition-transform">
+          <div onClick={handleScroll} className="text-right cursor-pointer text-3xl">
+            {cancelSymbol}
           </div>
+          <ul className="flex flex-col gap-4 pt-6 text-center">
+            <li className="p-2 rounded-md hover:bg-[#8B5E3B] transition">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="p-2 rounded-md hover:bg-[#8B5E3B] transition">
+              <Link to="/products">Products</Link>
+            </li>
+            <li className="p-2 rounded-md hover:bg-[#8B5E3B] transition">
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </aside>
+      )}
+
+      {/* Desktop Navbar */}
+      <motion.header
+        style={{
+          backgroundColor: backgroundColor ? "#3E2723" : "transparent",
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="hidden md:flex justify-between items-center w-full px-6 py-3 fixed top-0 left-0 text-white shadow-md"
+      >
+        <h1 className="text-3xl font-semibold tracking-wide text-[#E3C08D]">Caraleto</h1>
+        <div className="flex items-center gap-6 text-lg">
+          <Link to="/" className="hover:text-[#FFD700] transition">Home</Link>
+          <Link to="/products" className="hover:text-[#FFD700] transition">Products</Link>
+          <Link to="/contact" className="hover:text-[#FFD700] transition">Contact</Link>
         </div>
-      </nav> */
+        <div className="relative hover:scale-110 transition-transform cursor-pointer">
+          <button onClick={handleShowModal}>{shoppingBag}</button>
+          <p className="absolute top-3 right-0 bg-red-500 text-white text-xs font-bold px-1 py-0 rounded-full">
+            {itemAmount}
+          </p>
+        </div>
+      </motion.header>
+
+      <CartModal ref={dialog} />
+    </motion.div>
+  );
+}

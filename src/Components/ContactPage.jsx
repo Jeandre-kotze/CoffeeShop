@@ -1,9 +1,11 @@
 import { coffeeMug } from "./icons"
+import Navbar from "./Navbar"
 
 export default function ContactPage(){
     
     return(
         <div className="w-full h-screen flex justify-center items-center bg-orange-100">
+            <Navbar />
                 <div className="h-fit flex flex-col items-center w-96 p-3 sm:p-0">
                     <h1 className="text-4xl pb-2">{coffeeMug}</h1>
                     <h2 className="text-4xl font-bold text-center sm:text-left">Subscribe for specials</h2>

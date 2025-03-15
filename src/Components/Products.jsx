@@ -17,13 +17,13 @@ export default function Products(){
                 setLimitReached(true);
                 return number + 8;
             } else{
-                return number + 8;
+                return;
             }
         })
     }
 
     return (
-        <div className="w-full h-full px-8 bg-orange-100 min-h-[100vh]">
+        <div className="w-full h-full px-8 bg-orange-200 min-h-[100vh] text-white">
             <Navbar />
             <h1 className="pt-[65px] pb-3 text-center font-light font-serif text-4xl" >Order now</h1>
             <div className="justify-items-center grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-4
@@ -36,7 +36,7 @@ export default function Products(){
                     }
                 })}
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center pb-3">
                 <button onClick={handleIncrement} className={`text-white bg-black p-2 rounded-full ${limitReached && "hidden"}`}>{shevronBarDown}</button>
             </div>
         </div>
